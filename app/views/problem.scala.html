@@ -1,0 +1,28 @@
+@(id: Integer, question: Html)
+@main("WSJS - Problem Page", "problem"){
+<div class="main">
+    <div class="jumbotron">
+        @question
+    </div>
+    @helper.form(action = routes.Application.upload(id), 'enctype -> "multipart/form-data") {
+    <div align="center">
+        <input type="file" id="file" onchange="file_selected()" name="answer"></br>
+    </div>
+    <button type="button" id="button" class="btn btn-success btn-lg disabled" onclick="before_submit()">ファイルを選択</button>
+    <input type="submit" id="submit" style="display: none;">
+    }
+</div>
+<script>
+    file_selected = function() {
+        if($('#file')[0].value.length > 0) {
+            $('#button').removeClass('disabled');
+            $('#button').text("送信！");
+        }
+    }
+    before_submit = function() {
+        if($('#file')[0].value.length > 0) {
+            $('#submit').click();
+        }
+    }
+</script>
+}
