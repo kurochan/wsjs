@@ -1,0 +1,37 @@
+<h1>単語リストの生成2</h1>
+<p class="lead">
+    単語リストを作りましょう。<br>
+    文中に出てきた単語を、頻度の高い順に出力してください。その際、空白を一つあけて、その単語の出現回数を出力してください。<br>
+    同じ回数の単語があった場合は、辞書順で先にくる方の単語を先に出力してください。
+</p>
+<div class="row">
+    <div class="alert alert-info col-lg-8 col-lg-offset-2">
+        <strong>サンプル</strong>
+        <div class="text-left">
+            <span class="label label-info">入力</span>
+            <pre>
+java lisp ruby lisp nasm
+atom bash atom curl ruby atom
+nasm ruby java sh tex
+            </pre>
+            <span class="label label-info">出力</span>
+            <pre>
+atom 3
+ruby 3
+java 2
+lisp 2
+nasm 2
+bash 1
+curl 1
+sh 1
+tex 1
+            </pre>
+        </div>
+    </div>
+</div>
+<div class="alert alert-warning">
+    <span class="label label-warning">ヒント</span>
+    キーと値をセットで記憶できるデータ構造があったはずです。<br>
+    キーに単語、値に単語の出現回数を格納してみましょう。
+</div>
+<p class="lead"><a href="input">入力ファイル</a></p>
