@@ -30,20 +30,10 @@ public class Application extends Controller {
 		}
 	}
 
-	private static List<String> getTitleList() throws IOException {
-		List<String> titles = new ArrayList<String>();
-		BufferedReader br = getBufferedReaderFromFile("questions/question_list.txt");
-		String line;
-		while ((line = br.readLine()) != null) {
-			titles.add(line);
-		}
-		return titles;
-	}
-
 	public static Result problem(int id) {
 		try {
-			BufferedReader br = getBufferedReaderFromFile("questions/q"
-					+ String.format("%04d", id) + ".html");
+			BufferedReader br = getBufferedReaderFromFile("problems/p"
+					+ String.format("%04d", id) + "/problem.html");
 			StringBuilder sb = new StringBuilder();
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -57,21 +47,14 @@ public class Application extends Controller {
 		}
 	}
 
-	private static BufferedReader getBufferedReaderFromFile(String filename)
-			throws FileNotFoundException {
-		File file = new File(filename);
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file)));
-		return br;
-	}
-
 	public static Result inputFile(int id) {
 		response().setContentType("application/octet-stream");
 		response().setHeader(
 				"Content-Disposition",
 				"attachment; filename=input" + String.format("%03d", id)
 						+ ".txt");
-		return ok(new File("questions/q0000.txt"));
+		return ok(new File("problems/p" + String.format("%04d", id)
+				+ "/input.txt"));
 	}
 
 	public static Result result() {
@@ -85,8 +68,8 @@ public class Application extends Controller {
 
 	public static Result upload(int id) {
 		File input = getFileFromRequest();
-		File answer = new File("questions/a" + String.format("%04d", id)
-				+ ".txt");
+		File answer = new File("problems/p" + String.format("%04d", id)
+				+ "/answer.txt");
 		try {
 			flash("id", Integer.toString(id));
 			if (isCollectAnswer(answer, input)) {
@@ -102,16 +85,34 @@ public class Application extends Controller {
 		}
 	}
 
+	private static List<String> getTitleList() throws IOException {
+		List<String> titles = new ArrayList<String>();
+		BufferedReader br = getBufferedReaderFromFile("problems/problem_list.txt");
+		String line;
+		while ((line = br.readLine()) != null) {
+			titles.add(line);
+		}
+		return titles;
+	}
+
 	private static File getFileFromRequest() {
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart input = body.getFile("answer");
 		if (input != null) {
-			String fileName = input.getFilename();
-			String contentType = input.getContentType();
+			// String fileName = input.getFilename();
+			// String contentType = input.getContentType();
 			return input.getFile();
 		} else {
 			return null;
 		}
+	}
+
+	private static BufferedReader getBufferedReaderFromFile(String filename)
+			throws FileNotFoundException {
+		File file = new File(filename);
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				new FileInputStream(file)));
+		return br;
 	}
 
 	@SuppressWarnings("resource")
