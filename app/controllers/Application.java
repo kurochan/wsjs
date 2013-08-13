@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,10 +109,10 @@ public class Application extends Controller {
 	}
 
 	private static BufferedReader getBufferedReaderFromFile(String filename)
-			throws FileNotFoundException {
+			throws FileNotFoundException, UnsupportedEncodingException {
 		File file = new File(filename);
 		BufferedReader br = new BufferedReader(new InputStreamReader(
-				new FileInputStream(file)));
+				new FileInputStream(file), "utf-8"));
 		return br;
 	}
 
